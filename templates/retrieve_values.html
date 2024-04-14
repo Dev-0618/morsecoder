@@ -1,0 +1,20 @@
+<!-- templates/retrieve_values.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retrieve Values</title>
+</head>
+<body>
+    <h2>Retrieved Values</h2>
+    <ul>
+        {% for user_value in user_values %}
+            <li>{{ user_value.letter }}: {{ user_value.value }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

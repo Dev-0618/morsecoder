@@ -1,0 +1,106 @@
+<!-- templates/morse_code_app.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Morse Code Encoder/Decoder</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Morse Code Encoder/Decoder</h1>
+
+    <!-- Section 1: Enter Values -->    
+    <section>
+        <form action="/enter_values" method="post">
+            <h2>Enter Custom Values</h2>
+            <div class="row">
+                <div class="column">
+                    {% for user_value in user_values if loop.index <= (user_values|length // 2) %}
+                        <label for="{{ user_value.letter }}">{{ user_value.letter }}</label>
+                        <input type="text" id="{{ user_value.letter }}" name="{{ user_value.letter }}" value="{{ user_value.value }}"><br>
+                    {% endfor %}
+                </div>
+
+                <div class="column">
+                    {% for user_value in user_values if loop.index > (user_values|length // 2) %}
+                        <label for="{{ user_value.letter }}">{{ user_value.letter }}</label>
+                        <input type="text" id="{{ user_value.letter }}" name="{{ user_value.letter }}" value="{{ user_value.value }}"><br>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="column">
+                    <!-- Add input fields for additional characters -->
+                    {% for char in 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789' %}
+                        {% if char not in user_values|map(attribute='letter') %}
+                            <label for="{{ char }}">{{ char }}</label>
+                            <input type="text" id="{{ char }}" name="{{ char }}" value=""><br>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+
+                <div class="column">
+                    <!-- Add input fields for additional characters -->
+                    {% for char in ' ,.? < >{}[]\\|~!@#$%^&*()_+=-' %}
+                        <label for="{{ char }}">{{ char }}</label>
+                        <input type="text" id="{{ char }}" name="{{ char }}" value=""><br>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <button type="submit">Submit</button>
+        </form>
+    </section>
+
+    <!-- Section 2: Retrieve Values -->
+    <section>
+        <form action="/retrieve_values" method="get">
+            <h2>Retrieve Values</h2>
+            <button type="submit">Retrieve Values</button>
+        </form>
+
+        {% if user_values %}
+            <h2>Retrieved Values</h2>
+            <ul>
+                {% for user_value in user_values %}
+                    <li>{{ user_value.letter }}: {{ user_value.value }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </section>
+
+    <!-- Section 3: Encode/Decode Values -->
+    <section>
+        <!-- Left side: Encode -->
+        <form action="/encode" method="post">
+            <h2>Encode Values</h2>
+            <label for="user_input">Enter text to convert to Morse code:</label>
+            <input type="text" name="user_input" id="user_input" required>
+            <button type="submit">Encode</button>
+        </form>
+
+        {% if encoded_text %}
+            <p>ENCODED: {{ encoded_text }}</p>
+        {% endif %}
+    </section>
+
+    <!-- Right side: Decode -->
+    <section>
+        <form action="/decode" method="post">
+            <h2>Decode Values</h2>
+            <label for="morse_input">Enter Morse code to decode:</label>
+            <input type="text" name="morse_input" id="morse_input" required>
+            <button type="submit">Decode</button>
+        </form>
+
+        {% if decoded_text %}
+            <p>Decoded Text: {{ decoded_text }}</p>
+        {% endif %}
+    </section>
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!-- templates/enter_values.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enter Values</title>
+</head>
+<body>
+    <h2>Enter Custom Values</h2>
+    <form method="post">
+        {% for letter in 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789' %}
+            <label for="{{ letter }}">{{ letter }}</label>
+            <input type="number" id="{{ letter }}" name="{{ letter }}" value="0" min="0"><br>
+        {% endfor %}
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>

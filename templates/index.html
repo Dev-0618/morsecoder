@@ -1,0 +1,17 @@
+<!-- templates/index.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Morse Code Encoder/Decoder</title>
+</head>
+<body>
+    <h1>Morse Code Encoder/Decoder</h1>
+    <p><a href="{{ url_for('enter_values') }}">Enter Values</a></p>
+    <p><a href="{{ url_for('retrieve_values') }}">Retrieve Values</a></p>
+</body>
+</html>
